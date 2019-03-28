@@ -76,21 +76,24 @@ function check_stack() {
   fi
   mv ${cache_path}/cargo ${cache_path}/..
   mv ${cache_path}/multirust ${cache_path}/..
-  #if [ ! -f "${cache_path}/stack" ] || [ $(cat "${cache_path}/stack") != "${STACK}" ]; then
-  #  output_section "Stack changed, will rebuild"
-  #  rm -rf ${cache_path}/*
-  #fi
+  if [ ! -f "${cache_path}/stack" ] || [ $(cat "${cache_path}/stack") != "${STACK}" ]; then
+    output_section "Stack changed, will rebuild"
+    rm -rf ${cache_path}/*
+  fi
   mv ${cache_path}/../cargo ${cache_path}
   mv ${cache_path}/../multirust ${cache_path}
-  ls  ${cache_path}
-  ls  ${cache_path}/stack
-
-  echo "${STACK}" > "${cache_path}/stack"
 }
 
 function clean_cache() {
   if [ $always_rebuild = true ]; then
-    output_section "Cleaning all cache to force rebuilds"
+    mv ${cache_path}/cargo ${cache_path}/..
+    mv ${cache_path}/multirust ${cache_path}/..
+    
+    output_section "Cleaning all elixir cache to force rebuilds"
     rm -rf $cache_path/*
+    
+    mv ${cache_path}/../cargo ${cache_path}
+    mv ${cache_path}/../multirust ${cache_path}
+    ls  ${cache_path}
   fi
 }
