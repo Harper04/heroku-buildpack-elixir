@@ -74,7 +74,7 @@ function check_stack() {
     echo "ERROR: cedar stack is not supported, upgrade to cedar-14"
     exit 1
   fi
-
+  ls ${cache_path}
   if [ ! -f "${cache_path}/stack" ] || [ $(cat "${cache_path}/stack") != "${STACK}" ]; then
     output_section "Stack changed, will rebuild"
     rm -rf ${cache_path}/*
